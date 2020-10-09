@@ -183,6 +183,7 @@ module.exports = function(grunt) {
                     "packages/node_modules/@node-red/editor-client/src/js/ui/subflow.js",
                     "packages/node_modules/@node-red/editor-client/src/js/ui/group.js",
                     "packages/node_modules/@node-red/editor-client/src/js/ui/userSettings.js",
+                    "packages/node_modules/@node-red/editor-client/src/js/ui/thingjsSettings.js",
                     "packages/node_modules/@node-red/editor-client/src/js/ui/projects/projects.js",
                     "packages/node_modules/@node-red/editor-client/src/js/ui/projects/projectSettings.js",
                     "packages/node_modules/@node-red/editor-client/src/js/ui/projects/projectUserSettings.js",

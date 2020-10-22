@@ -100,7 +100,7 @@ module.exports = function(grunt) {
             // },
             nodes: {
                 files: {
-                    src: [ 'nodes/core/*/*.js' ]
+                    src: [ 'nodes/core/*/*.js', 'nodes/thingjs/*/*.js' ]
                 }
             },
             editor: {

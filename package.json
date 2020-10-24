@@ -81,7 +81,6 @@
         "bcrypt": "3.0.8"
     },
     "devDependencies": {
-        "marked": "0.8.2",
         "dompurify": "2.0.12",
         "grunt": "~1.0.4",
         "grunt-chmod": "~1.1.1",
@@ -93,6 +92,7 @@
         "grunt-contrib-copy": "~1.0.0",
         "grunt-contrib-jshint": "~2.1.0",
         "grunt-contrib-uglify": "~4.0.1",
+        "grunt-contrib-uglify-es": "^3.3.0",
         "grunt-contrib-watch": "~1.1.0",
         "grunt-jsdoc": "^2.2.1",
         "grunt-jsdoc-to-markdown": "^4.0.0",
@@ -106,6 +106,7 @@
         "http-proxy": "1.18.1",
         "istanbul": "0.4.5",
         "jsdoc-nr-template": "github:node-red/jsdoc-nr-template",
+        "marked": "0.8.2",
         "minami": "1.2.3",
         "mocha": "^5.2.0",
         "mosca": "^2.8.3",

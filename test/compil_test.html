@@ -1,13 +1,17 @@
 <html>
-    <head>
-        <script>
-            var $$r = {
-                timer: window
-            };
-            window.print = console.log;
-        </script>
-        <script src="compil_test.js"></script>
-    </head>
-    <body>
-    </body>
+<head>
+    <script src="mustache.js"></script>
+    <script>
+        var $r = {
+            timer: window,
+            str: {
+                mustache: Mustache.render
+            }
+        };
+        window.print = console.log;
+    </script>
+    <script src="compil_test.js"></script>
+</head>
+<body>
+</body>
 </html>

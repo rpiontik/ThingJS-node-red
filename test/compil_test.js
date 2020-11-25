@@ -1,3 +1,5 @@
+let $g = {};
+
 function $$nop() {
 }
 
@@ -10,16 +12,35 @@ function $$cpy(s) {
 }
 
 let $$nd = {
-    "rev": "ff3fe82141ec81a2e045c538e3be6afb", "3": function ($i, $c) {
+    "rev": "6562aef8597b6b56f3511658cfe90f56", "2": function ($i, $c) {
         ({
             "$c": $c, "$n": $$nop, "$e": function ($i) {
                 print($i);
             }
         }).$e($i);
-    }, "4": function ($i, $c) {
+    }, "1": function ($i, $c) {
         ({
-            "$c": $c, "$n": $$nop, "$e": function ($i) {
-                print(this.$c["payload"]);
+            "$c": $c, "$n": function ($i) {
+                $$fnd($i[0]) && $$nd["3"]($$cpy($i[0]), this.$c);
+            }, "$e": function ($i) {
+                $i["payload"] = "123";
+                $$nop();
+                delete $i["topic"];
+                $i["payload"] = $i["topic"];
+                delete $i["topic"];
+                this.$c["payload"] = "111";
+                $g["payload"] = "222";
+                $i["payload"] = "HELLO!";
+                this.$n([$i]);
+            }
+        }).$e($i);
+    }, "3": function ($i, $c) {
+        ({
+            "$c": $c, "$n": function ($i) {
+                $$fnd($i[0]) && $$nd["2"]($$cpy($i[0]), this.$c);
+            }, "$e": function ($i) {
+                $i["test"] = "This is the payload: {{payload}} !";
+                this.$n([$i]);
             }
         }).$e($i);
     }
@@ -29,14 +50,13 @@ let $$nd = {
     ({
         "$c": $c, "$n": function ($i) {
             $$fnd($i[0]) && $$nd["1"]($$cpy($i[0]), this.$c);
-            $$fnd($i[0]) && $$nd["2"]($$cpy($i[0]), this.$c);
         }, "$e": function ($i) {
             this.inject = function () {
                 this.$n([{"test": "pest2", "topic": "123"}]);
             };
-            $$r.timer.setTimeout(function (scope) {
+            $r.timer.setTimeout(function (scope) {
                 scope.inject();
-                $$r.timer.setInterval(function (scope) {
+                $r.timer.setInterval(function (scope) {
                     scope.inject();
                 }, 5000, scope || this);
             }, 100, this);

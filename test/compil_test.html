@@ -5,7 +5,10 @@
         var $r = {
             timer: window,
             str: {
-                mustache: Mustache.render
+                mustache: Mustache.render,
+                replaceAll: function(str, from, to) {
+                    return str.replace(new RegExp(from, 'g'), to);
+                }
             }
         };
         window.print = console.log;

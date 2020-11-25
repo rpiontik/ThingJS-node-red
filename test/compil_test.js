@@ -12,7 +12,7 @@ function $$cpy(s) {
 }
 
 let $$nd = {
-    "rev": "6562aef8597b6b56f3511658cfe90f56", "2": function ($i, $c) {
+    "rev": "53b38d5856823df404efd010f41b6fff", "2": function ($i, $c) {
         ({
             "$c": $c, "$n": $$nop, "$e": function ($i) {
                 print($i);
@@ -23,14 +23,8 @@ let $$nd = {
             "$c": $c, "$n": function ($i) {
                 $$fnd($i[0]) && $$nd["3"]($$cpy($i[0]), this.$c);
             }, "$e": function ($i) {
-                $i["payload"] = "123";
-                $$nop();
-                delete $i["topic"];
-                $i["payload"] = $i["topic"];
-                delete $i["topic"];
-                this.$c["payload"] = "111";
-                $g["payload"] = "222";
-                $i["payload"] = "HELLO!";
+                $i["payload"] = "12232";
+                $i["payload"] = $r.str.replaceAll($i["payload"], "2", "7");
                 this.$n([$i]);
             }
         }).$e($i);

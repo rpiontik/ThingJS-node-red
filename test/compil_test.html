@@ -8,6 +8,9 @@
                 mustache: Mustache.render,
                 replaceAll: function(str, from, to) {
                     return str.replace(new RegExp(from, 'g'), to);
+                },
+                split : function (str, split) {
+                    return (''+str).split(split);
                 }
             }
         };

@@ -16,7 +16,7 @@ function $$mid() {
 }
 
 let $$nd = {
-    "rev": "e2c7bac85f9514c65d34aa4b32380fd9", "3": function ($i, $c) {
+    "rev": "5be3aaff8265b528071a374dad62e150", "3": function ($i, $c) {
         ({
             "$c": $c, "$id": 3, "$n": $$nop, "$e": function ($i) {
                 print(JSON.stringify($i));
@@ -41,7 +41,7 @@ let $$nd = {
                     let acc = $g[c.jid];
                     if (acc && acc.p.length > 0) {
                         let $i = acc.i;
-                        $i.payload = $r.str.join(acc.p, c.joiner);
+                        $i.payload = acc.p;
                         c.$n([$i])
                     }
                     $g[c.jid] = null
@@ -50,7 +50,7 @@ let $$nd = {
                 acc.p.push($i.payload || "");
                 acc.i = $i;
                 if ($i.complete || (acc.p.length >= this.count)) {
-                    $i.payload = $r.str.join(acc.p, this.joiner);
+                    $i.payload = acc.p;
                     acc = null;
                     this.$n([$i])
                 }

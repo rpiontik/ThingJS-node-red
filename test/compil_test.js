@@ -16,59 +16,67 @@ function $$mid() {
 }
 
 let $$nd = {
-    "rev": "655afbc7d64cb4109158bbfa8f9f753a", "3": function ($i, $c) {
+    "rev": "50062121ce591e96214887d8f38882a0", "5": function ($i, $c) {
         ({
-            "$c": $c, "$id": 3, "$n": $$nop, "$e": function ($i) {
+            "$c": $c, "$id": 5, "$n": $$nop, "$e": function ($i) {
                 print(JSON.stringify($i));
             }
         }).$e($i);
     }, "2": function ($i, $c) {
         ({
             "$c": $c, "$id": 2, "$n": function ($i) {
-                $$fnd($i[0]) && $$nd["4"]($$cpy($i[0]), this.$c);
+                $$fnd($i[0]) && $$nd["6"]($$cpy($i[0]), this.$c);
             }, "$e": function ($i) {
-                $i["payload"] = "test";
+                $i["payload"] = {"a": "test", "b": "test2"};
+                this.$n([$i]);
+            }
+        }).$e($i);
+    }, "6": function ($i, $c) {
+        ({
+            "$c": $c,
+            "count": 2,
+            "joiner": "\n",
+            "to": 0,
+            "prop": "payload",
+            "key": "topic",
+            "accum": true,
+            "$id": 6,
+            "$n": function ($i) {
+                $$fnd($i[0]) && $$nd["5"]($$cpy($i[0]), this.$c);
+            },
+            "$e": function ($i) {
+                this.jid = "_jn_" + this.$id;
+                let acc = $g[this.jid] || {"p": [], "c": 0};
+                acc.i = $i;
+                acc.pl = acc.pl || {};
+                if ($i.payload) for (let k in $i.payload) {
+                    acc.pl[k] = $i.payload[k];
+                    acc.c++
+                }
+                if ($i.complete || (acc.c >= this.count)) {
+                    $i.payload = acc.pl;
+                    if (!this.accum) acc = null;
+                    this.$n([$i])
+                }
+                $g[this.jid] = acc;
+            }
+        }).$e($i);
+    }, "3": function ($i, $c) {
+        ({
+            "$c": $c, "$id": 3, "$n": function ($i) {
+                $$fnd($i[0]) && $$nd["6"]($$cpy($i[0]), this.$c);
+            }, "$e": function ($i) {
+                $i["payload"] = {"z": "test", "y": "test2"};
                 this.$n([$i]);
             }
         }).$e($i);
     }, "4": function ($i, $c) {
         ({
-            "$c": $c,
-            "count": 2,
-            "joiner": "\n",
-            "to": 3000,
-            "prop": "payload",
-            "key": "topic",
-            "$id": 4,
-            "$n": function ($i) {
-                $$fnd($i[0]) && $$nd["3"]($$cpy($i[0]), this.$c);
-            },
-            "$e": function ($i) {
-                this.jid = "_jn_" + this.$id;
-                $g[this.jid] === undefined && setInterval(function (c) {
-                    let acc = $g[c.jid];
-                    if (acc && acc.p.length > 0) {
-                        let $i = acc.i;
-                        $i.payload = {};
-                        for (let i in acc.p) {
-                            $i.payload[acc.p[i].k] = acc.p[i].v
-                        }
-                        c.$n([$i])
-                    }
-                    $g[c.jid] = null
-                }, this.to, this);
-                let acc = $g[this.jid] || {"p": []};
-                acc.p.push({"k": $i[this.key], "v": $i[this.prop] || ""});
-                acc.i = $i;
-                if ($i.complete || (acc.p.length >= this.count)) {
-                    $i.payload = {};
-                    for (let i in acc.p) {
-                        $i.payload[acc.p[i].k] = acc.p[i].v
-                    }
-                    acc = null;
-                    this.$n([$i])
-                }
-                $g[this.jid] = acc;
+            "$c": $c, "$id": 4, "$n": function ($i) {
+                $$fnd($i[0]) && $$nd["6"]($$cpy($i[0]), this.$c);
+            }, "$e": function ($i) {
+                $i["payload"] = {"e": "test", "r": "test2"};
+                this.$n([$i]);
             }
         }).$e($i);
     }
@@ -78,15 +86,14 @@ let $$nd = {
     ({
         "$c": $c, "$id": 1, "$n": function ($i) {
             $$fnd($i[0]) && $$nd["2"]($$cpy($i[0]), this.$c);
+            $$fnd($i[0]) && $$nd["3"]($$cpy($i[0]), this.$c);
+            $$fnd($i[0]) && $$nd["4"]($$cpy($i[0]), this.$c);
         }, "$e": function ($i) {
             this.inject = function () {
                 this.$n([{"test": "pest2", "topic": "123"}]);
             };
             $r.timer.setTimeout(function (scope) {
                 scope.inject();
-                $r.timer.setInterval(function (scope) {
-                    scope.inject();
-                }, 1000, scope || this);
             }, 100, this);
         }
     }).$e({})

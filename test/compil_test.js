@@ -16,7 +16,7 @@ function $$mid() {
 }
 
 let $$nd = {
-    "rev": "4221f8d7e01802186fc04a94512122c6", "6": function ($i, $c) {
+    "rev": "3e94d92282d1b5febcd9850ed1bba038", "6": function ($i, $c) {
         ({
             "$c": $c, "$id": 6, "$n": $$nop, "$e": function ($i) {
                 print(JSON.stringify($i));
@@ -126,7 +126,7 @@ let $$nd = {
             "full": false,
             "$id": 9,
             "$n": function ($i) {
-                $$fnd($i[0]) && $$nd["6"]($$cpy($i[0]), this.$c);
+                $$fnd($i[0]) && $$nd["10"]($$cpy($i[0]), this.$c);
             },
             "$e": function ($i) {
                 this.jid = "_jn_" + this.$id;
@@ -153,7 +153,65 @@ let $$nd = {
                 $g[this.jid] = acc
             }
         }).$e($i);
-    }
+    }, "10": function ($i, $c) {
+        ({
+            "$c": $c, "drop": true, "delay": 5000, "ql": 50, "$id": 10, "$n": function ($i) {
+                $$fnd($i[0]) && $$nd["6"]($$cpy($i[0]), this.$c);
+            }, "$e": function ($i) {
+                this._id = '_dl_' + this.$id;
+                let n = $g[this._id], clr = !n;
+                n = n || ($g[this._id] = {
+                    q: {}, sl: [], tmr: $r.timer.setInterval(function (c) {
+                        let n = $g[c._id];
+                        if (n.sl.length < 1) for (let k in n.q) {
+                            if (n.q[k].length > 0) n.sl.push(n.q[k].splice(0, 1)[0]); else delete n.q[k]
+                        }
+                        if (n.sl.length > 0) c.$n([n.sl.splice(0, 1)[0]]); else for (let k in n.q) return;
+                        $r.timer.clearInterval(n.tmr);
+                        $g[c._id] = null;
+                    }, this.delay, this)
+                });
+                let q = n.q[$i.topic];
+                clr = !q;
+                q = q || (n.q[$i.topic] = n.q[$i.topic] || []);
+                if ($i.flush) {
+                    for (let k in n.sl) if (n.sl[k].topic === $i.topic) this.$n([n.sl[k]]);
+                    for (let k in q) this.$n([q[k]]);
+                }
+                if ($i.reset || $i.flush) {
+                    n.q[$i.topic] = [];
+                    for (let k in n.sl) if (n.sl[k].topic === $i.topic) n.sl.splice(k, 1);
+                    return
+                }
+                if (this.drop) {
+                    n.q[$i.topic] = q = [];
+                    for (let k in n.sl) if (n.sl[k].topic === $i.topic) n.sl.splice(k, 1);
+                }
+                if (clr) this.$n([$i]); else {
+                    if (q.length >= this.ql) q.splice(0, 1);
+                    q.push($i)
+                }
+            }
+        }).$e($i);
+    }, "12": function ($i, $c) {
+        ({
+            "$c": $c, "$id": 12, "$n": function ($i) {
+                $$fnd($i[0]) && $$nd["10"]($$cpy($i[0]), this.$c);
+            }, "$e": function ($i) {
+                $i["payload"] = {"g": "test", "h": "test2"};
+                this.$n([$i]);
+            }
+        }).$e($i);
+    }, "13": function ($i, $c) {
+        ({
+            "$c": $c, "$id": 13, "$n": function ($i) {
+                $$fnd($i[0]) && $$nd["10"]($$cpy($i[0]), this.$c);
+            }, "$e": function ($i) {
+                $i["payload"] = {"g": "test3", "h": "test4"};
+                this.$n([$i]);
+            }
+        }).$e($i);
+    }, "14": $$nop
 };
 (function () {
     let $c = {};
@@ -166,6 +224,22 @@ let $$nd = {
         }, "$e": function ($i) {
             this.inject = function () {
                 this.$n([{"test": "pest2", "topic": "123"}]);
+            };
+            $r.timer.setTimeout(function (scope) {
+                scope.inject();
+            }, 100, this);
+        }
+    }).$e({})
+})();
+(function () {
+    let $c = {};
+    ({
+        "$c": $c, "$id": 11, "$n": function ($i) {
+            $$fnd($i[0]) && $$nd["12"]($$cpy($i[0]), this.$c);
+            $$fnd($i[0]) && $$nd["13"]($$cpy($i[0]), this.$c);
+        }, "$e": function ($i) {
+            this.inject = function () {
+                this.$n([{"payload": "", "topic": "321"}]);
             };
             $r.timer.setTimeout(function (scope) {
                 scope.inject();

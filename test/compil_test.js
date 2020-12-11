@@ -16,7 +16,7 @@ function $$mid() {
 }
 
 let $$nd = {
-    "rev": "3e94d92282d1b5febcd9850ed1bba038", "6": function ($i, $c) {
+    "rev": "26faae197c3e90de4f3931406bcb7e35", "6": function ($i, $c) {
         ({
             "$c": $c, "$id": 6, "$n": $$nop, "$e": function ($i) {
                 print(JSON.stringify($i));
@@ -171,18 +171,27 @@ let $$nd = {
                         $g[c._id] = null;
                     }, this.delay, this)
                 });
-                let q = n.q[$i.topic];
-                clr = !q;
-                q = q || (n.q[$i.topic] = n.q[$i.topic] || []);
+                let q;
+                if ($i.topic) {
+                    q = n.q[$i.topic];
+                    clr = !q;
+                    q = q || (n.q[$i.topic] = n.q[$i.topic] || []);
+                }
                 if ($i.flush) {
-                    for (let k in n.sl) if (n.sl[k].topic === $i.topic) this.$n([n.sl[k]]);
-                    for (let k in q) this.$n([q[k]]);
+                    for (let k in n.sl) if (!$i.topic || (n.sl[k].topic === $i.topic)) this.$n([n.sl[k]]);
+                    if (!$i.topic) {
+                        for (let qk in n.q) for (let k in n.q[qk]) this.$n([n.q[qk][k]])
+                    } else for (let k in q) this.$n([q[k]]);
                 }
                 if ($i.reset || $i.flush) {
-                    n.q[$i.topic] = [];
+                    if (!$i.topic) {
+                        n.q = {};
+                        n.sl = []
+                    } else n.q[$i.topic] = [];
                     for (let k in n.sl) if (n.sl[k].topic === $i.topic) n.sl.splice(k, 1);
                     return
                 }
+                if (!$i.topic) return;
                 if (this.drop) {
                     n.q[$i.topic] = q = [];
                     for (let k in n.sl) if (n.sl[k].topic === $i.topic) n.sl.splice(k, 1);
@@ -211,7 +220,7 @@ let $$nd = {
                 this.$n([$i]);
             }
         }).$e($i);
-    }, "14": $$nop
+    }
 };
 (function () {
     let $c = {};
@@ -244,6 +253,21 @@ let $$nd = {
             $r.timer.setTimeout(function (scope) {
                 scope.inject();
             }, 100, this);
+        }
+    }).$e({})
+})();
+(function () {
+    let $c = {};
+    ({
+        "$c": $c, "$id": 14, "$n": function ($i) {
+            $$fnd($i[0]) && $$nd["10"]($$cpy($i[0]), this.$c);
+        }, "$e": function ($i) {
+            this.inject = function () {
+                this.$n([{"payload": "123", "topic": "444", "reset": "1"}]);
+            };
+            $r.timer.setTimeout(function (scope) {
+                scope.inject();
+            }, 1000, this);
         }
     }).$e({})
 })();
